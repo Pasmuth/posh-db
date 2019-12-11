@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
-from app.models import User
+from app.models import User, List, ListItem
 
 class LoginForm(FlaskForm):
 	username = StringField('Username', validators = [DataRequired()])
@@ -27,3 +27,14 @@ class RegistrationForm(FlaskForm):
 		user = User.query.filter_by(email = email.data).first()
 		if user is not None:
 			raise ValidationError('Please use a different email address.')
+
+
+class CreatePost(FlaskForm):
+	title = StringField('Title', validators = [DataRequired()])
+	body = TextAreaField('Body', validators = [DataRequired()])
+	submit = SubmitField('Publish')
+
+
+class CreateClient(FlaskForm):
+	name = StringField('Name', validators = [DataRequired()])
+	gender = SelectField('Gender', choices = zip(ListItem.query.filter_by(list_id=1).list_items,

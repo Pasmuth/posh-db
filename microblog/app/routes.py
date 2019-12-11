@@ -2,23 +2,14 @@ from flask import render_template, flash, redirect, url_for, request
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, CreatePost
+from app.models import User, Post
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-	posts = [
-		{
-			'author': {'username': 'John'},
-			'body': 'Beautiful day in Portland!'
-		},
-		{
-			'author': {'username': 'Susan'},
-			'body': 'The Avengers movie was so cool!'
-		}
-		]
+	posts = Post.query.filter_by(user_id = current_user.id)
 	return render_template('index.html', title='Home', posts=posts)
 
 
@@ -58,3 +49,16 @@ def register():
 		flash('Now Registered')
 		return redirect(url_for('login'))
 	return render_template('register.html', title = 'Register', form = form)
+
+
+@app.route('/make_post', methods = ['GET', 'POST'])
+@login_required
+def make_post():
+	form = CreatePost()
+	if form.validate_on_submit():
+		post = Post(title = form.title.data, body = form.body.data, user_id = current_user.id)
+		db.session.add(post)
+		db.session.commit()
+		flash('Post Published')
+		return redirect(url_for('index'))
+	return render_template('make_post.html', title = 'Create Post', form = form)
