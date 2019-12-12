@@ -92,6 +92,10 @@ def view_clients():
 			clients = clients.filter(Client.name == form.name.data)
 		if form.gender.data:
 			clients = clients.filter(Client.gender == form.gender.data)
+		if form.race.data:
+			clients = clients.filter(Client.race == form.race.data)
+		if form.military.data:
+			clients = clients.filter(Client.military == form.military.data)
 		clients = clients.all()
 		return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)
 	clients = Client.query.all()

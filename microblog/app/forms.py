@@ -57,6 +57,6 @@ class FilterClients(FlaskForm):
 
 	name = StringField('Name')
 	gender = SelectField('Gender', choices = gender_list_choices, validators = [Optional()], coerce = int)
-	# race = SelectField('Race', choices = race_choices, coerce = int)
-	# military = SelectField('Military', choices = military_status, coerce = int)
+	race = SelectField('Race', choices = race_choices, validators = [Optional()], coerce = int)
+	military = SelectField('Military', choices = military_status, validators = [Optional()], coerce = int)
 	submit = SubmitField('Filter Results')
