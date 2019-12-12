@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, List, ListItem
 
@@ -36,5 +36,18 @@ class CreatePost(FlaskForm):
 
 
 class CreateClient(FlaskForm):
+	lis = ListItem.query.filter_by(list_id = 1).all()
+	gender_list_choices = list(zip([li.id for li in lis],[li.list_value for li in lis]))
 	name = StringField('Name', validators = [DataRequired()])
-	gender = SelectField('Gender', choices = zip(ListItem.query.filter_by(list_id=1).list_items,
+	gender = SelectField('Gender', choices = gender_list_choices)
+	submit = SubmitField('Add Client')
+
+
+class ListItem(FlaskForm):
+	list_item = StringField('List Item')
+
+
+class CreateList(FlaskForm):
+	list_name = StringField('List Name')
+	list_items = FieldList(FormField(ListItem), min_entries = 2)
+	submit = SubmitField('Create List')
