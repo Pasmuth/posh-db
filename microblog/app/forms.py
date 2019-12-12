@@ -2,6 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, List, ListItem
+from app.lists import Lists
+
+lists = Lists()
 
 class LoginForm(FlaskForm):
 	username = StringField('Username', validators = [DataRequired()])
@@ -36,10 +39,13 @@ class CreatePost(FlaskForm):
 
 
 class CreateClient(FlaskForm):
-	lis = ListItem.query.filter_by(list_id = 1).all()
-	gender_list_choices = list(zip([li.id for li in lis],[li.list_value for li in lis]))
+	gender_list_choices = list(zip(lists.genders.keys(), lists.genders.values()))
+	race_choices = list(zip(lists.race.keys(), lists.race.values()))
+	military_status = list(zip(lists.military.keys(), lists.military.values()))
 	name = StringField('Name', validators = [DataRequired()])
 	gender = SelectField('Gender', choices = gender_list_choices)
+	race = SelectField('Race', choices = race_choices)
+	military = SelectField('Military', choices = military_status)
 	submit = SubmitField('Add Client')
 
 

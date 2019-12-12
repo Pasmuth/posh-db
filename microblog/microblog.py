@@ -1,4 +1,4 @@
-from app import app, db
+from app import app, db, lists
 from app.models import User, Post, Client, List, ListItem
 
 @app.shell_context_processor
@@ -8,4 +8,5 @@ def make_shell_context():
 			'Post':Post, 
 			'Client':Client, 
 			'List':List, 
-			'ListItem':ListItem}
+			'ListItem':ListItem,
+			'Lists':lists}

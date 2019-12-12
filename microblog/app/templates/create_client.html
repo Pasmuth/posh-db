@@ -13,8 +13,8 @@
 			{% endfor %}
 		</p>
 		<p>
-			{{ form.gender.label }} <br>
-			{{ form.gender(size=10) }} <br>
+			{{ form.gender.label }} {{ form.race.label }}<br>
+			{{ form.gender(size=10) }} {{ form.race(size=10) }}<br>
 			{% for error in form.gender.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
