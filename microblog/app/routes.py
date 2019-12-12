@@ -2,8 +2,9 @@ from flask import render_template, flash, redirect, url_for, request
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, CreatePost, CreateClient, CreateList
-from app.models import User, Post
+from app.forms import LoginForm, RegistrationForm, CreatePost, CreateClient, FilterClients
+from app.models import User, Post, Client
+from app.lists import Lists
 
 @app.route('/')
 @app.route('/index')
@@ -67,11 +68,27 @@ def make_post():
 @login_required
 def create_client():
 	form = CreateClient()
+	if form.validate_on_submit():
+		client = Client(name = form.name.data, 
+			            gender = form.gender.data, 
+			            race = form.race.data,
+			            military = form.military.data,
+			            created_by = current_user.id)
+		db.session.add(client)
+		db.session.commit()
+		flash('Client Added')
+		return redirect(url_for('view_clients'))
 	return render_template('create_client.html', title = 'Create Client', form = form)
 
 
-@app.route('/create_list', methods = ['GET', 'POST'])
+@app.route('/view_clients', methods = ['GET', 'POST'])
 @login_required
-def create_list():
-	form = CreateList()
-	return render_template('create_list.html', title = 'Create list', form = form)
+def view_clients():
+	lists = Lists()
+	form = FilterClients()
+	if form.validate_on_submit():
+		if form.name.data:
+			clients = Client.query.filter_by(name = form.name.data)
+		return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)
+	clients = Client.query.all()
+	return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)

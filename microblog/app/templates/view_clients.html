@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h1>View Clients</h1>
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.name.label }} <br>
+			{{ form.name(size=32) }} <br>
+			{% for error in form.name.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		
+		<p> {{ form.submit() }} </p>
+	</form>
+
+	<table>
+		<tr>
+			<th>Client ID</th>
+			<th>Name</th>
+			<th>Gender</th>
+			<th>Race</th>
+			<th>Military Status</th>
+			<th>Created By</th>
+			<th>Created Date</th>
+		<tr>
+		{% for c in clients %}
+		<tr>
+			<td>{{ c.id }}</td>
+			<td>{{ c.name }}</td>
+			<td>{{ lists.genders[c.gender] }}</td>
+			<td>{{ lists.race[c.race] }}</td>
+			<td>{{ lists.military[c.military] }}</td>
+			<td>{{ c.created_by }}</td>
+			<td>{{ c.created_date }}</td>
+		</tr>
+		{% endfor%}
+
+{% endblock %}

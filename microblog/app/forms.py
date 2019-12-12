@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
-from app.models import User, List, ListItem
+from app.models import User
 from app.lists import Lists
 
 lists = Lists()
@@ -42,18 +42,21 @@ class CreateClient(FlaskForm):
 	gender_list_choices = list(zip(lists.genders.keys(), lists.genders.values()))
 	race_choices = list(zip(lists.race.keys(), lists.race.values()))
 	military_status = list(zip(lists.military.keys(), lists.military.values()))
+
 	name = StringField('Name', validators = [DataRequired()])
-	gender = SelectField('Gender', choices = gender_list_choices)
-	race = SelectField('Race', choices = race_choices)
-	military = SelectField('Military', choices = military_status)
+	gender = SelectField('Gender', choices = gender_list_choices, coerce = int)
+	race = SelectField('Race', choices = race_choices, coerce = int)
+	military = SelectField('Military', choices = military_status, coerce = int)
 	submit = SubmitField('Add Client')
 
 
-class ListItem(FlaskForm):
-	list_item = StringField('List Item')
+class FilterClients(FlaskForm):
+	gender_list_choices = list(zip(lists.genders.keys(), lists.genders.values()))
+	race_choices = list(zip(lists.race.keys(), lists.race.values()))
+	military_status = list(zip(lists.military.keys(), lists.military.values()))
 
-
-class CreateList(FlaskForm):
-	list_name = StringField('List Name')
-	list_items = FieldList(FormField(ListItem), min_entries = 2)
-	submit = SubmitField('Create List')
+	name = StringField('Name')
+	# gender = SelectField('Gender', choices = gender_list_choices, coerce = int)
+	# race = SelectField('Race', choices = race_choices, coerce = int)
+	# military = SelectField('Military', choices = military_status, coerce = int)
+	submit = SubmitField('Filter Results')

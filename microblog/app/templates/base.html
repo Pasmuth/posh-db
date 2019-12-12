@@ -1,5 +1,22 @@
 <html>
     <head>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
       {% if title %}
       <title>{{ title }} - Microblog</title>
       {% else %}
@@ -15,7 +32,7 @@
             {% else %}
             <a href="{{ url_for('make_post') }}">Create Post</a>
             <a href="{{ url_for('create_client') }}">Create Client</a>
-            <a href="{{ url_for('create_list') }}">Create List</a>
+            <a href="{{ url_for('view_clients') }}">View Clients</a>
             <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
         </div>

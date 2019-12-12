@@ -13,9 +13,23 @@
 			{% endfor %}
 		</p>
 		<p>
-			{{ form.gender.label }} {{ form.race.label }}<br>
-			{{ form.gender(size=10) }} {{ form.race(size=10) }}<br>
+			{{ form.gender.label }}<br>
+			{{ form.gender(size=10) }}<br>
 			{% for error in form.gender.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.race.label }}<br>
+			{{ form.race(size=10) }}<br>
+			{% for error in form.race.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.military.label }}<br>
+			{{ form.military(size=10) }}<br>
+			{% for error in form.military.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
