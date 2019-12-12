@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, CreatePost
+from app.forms import LoginForm, RegistrationForm, CreatePost, CreateClient, CreateList
 from app.models import User, Post
 
 @app.route('/')
@@ -62,3 +62,16 @@ def make_post():
 		flash('Post Published')
 		return redirect(url_for('index'))
 	return render_template('make_post.html', title = 'Create Post', form = form)
+
+@app.route('/create_client', methods = ['GET', 'POST'])
+@login_required
+def create_client():
+	form = CreateClient()
+	return render_template('create_client.html', title = 'Create Client', form = form)
+
+
+@app.route('/create_list', methods = ['GET', 'POST'])
+@login_required
+def create_list():
+	form = CreateList()
+	return render_template('create_list.html', title = 'Create list', form = form)
