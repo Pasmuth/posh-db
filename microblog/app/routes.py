@@ -87,8 +87,12 @@ def view_clients():
 	lists = Lists()
 	form = FilterClients()
 	if form.validate_on_submit():
+		clients = Client.query
 		if form.name.data:
-			clients = Client.query.filter_by(name = form.name.data)
+			clients = clients.filter(Client.name == form.name.data)
+		if form.gender.data:
+			clients = clients.filter(Client.gender == form.gender.data)
+		clients = clients.all()
 		return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)
 	clients = Client.query.all()
 	return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)

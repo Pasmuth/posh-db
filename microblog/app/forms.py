@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FieldList, FormField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Optional
 from app.models import User
 from app.lists import Lists
 
@@ -56,7 +56,7 @@ class FilterClients(FlaskForm):
 	military_status = list(zip(lists.military.keys(), lists.military.values()))
 
 	name = StringField('Name')
-	# gender = SelectField('Gender', choices = gender_list_choices, coerce = int)
+	gender = SelectField('Gender', choices = gender_list_choices, validators = [Optional()], coerce = int)
 	# race = SelectField('Race', choices = race_choices, coerce = int)
 	# military = SelectField('Military', choices = military_status, coerce = int)
 	submit = SubmitField('Filter Results')
