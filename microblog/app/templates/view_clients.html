@@ -5,7 +5,7 @@
 	<h1>View Clients</h1>
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
-		<table>
+		<table class="filter">
 			<tr>
 				<th>{{ form.name.label }}</th>
 				<th>{{ form.gender.label }}</th>
@@ -44,7 +44,7 @@
 		<p> {{ form.submit() }} </p>
 	</form>
 
-	<table>
+	<table class="view">
 		<tr>
 			<th>Client ID</th>
 			<th>Name</th>
@@ -56,13 +56,13 @@
 		<tr>
 		{% for c in clients %}
 		<tr>
-			<td>{{ c.id }}</td>
-			<td>{{ c.name }}</td>
-			<td>{{ lists.genders[c.gender] }}</td>
-			<td>{{ lists.race[c.race] }}</td>
-			<td>{{ lists.military[c.military] }}</td>
-			<td>{{ c.created_by }}</td>
-			<td>{{ c.created_date }}</td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ c.id }}</a></td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ c.name }}</a></td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ lists.genders[c.gender] }}</a></td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ lists.race[c.race] }}</a></td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ lists.military[c.military] }}</a></td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ c.created_by }}</a></td>
+			<td><a href = "{{ url_for('client_page', clientID = c.id) }}">{{ c.created_date }}</a></td>
 		</tr>
 		{% endfor%}
 

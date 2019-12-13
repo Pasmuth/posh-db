@@ -1,5 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, FieldList, FormField
+from wtforms import StringField,PasswordField, \
+					BooleanField, SubmitField, \
+					TextAreaField, SelectField, \
+					FieldList, FormField, \
+					IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Optional
 from app.models import User, Client
 from app.lists import Lists
@@ -69,12 +73,12 @@ class AssessmentChooser(FlaskForm):
 	client = SelectField('Client', choices = client_list, coerce = int)
 	submit = SubmitField('Submit')
 
-class HousingAssessment(FlaskForm):
+class HousingAssessmentForm(FlaskForm):
 	housing_status_list = list(zip(lists.housing_status.keys(), lists.housing_status.values()))
 	housing_status = SelectField('Housing Status', choices = housing_status_list, coerce = int)
 	submit = SubmitField('Submit')
 
 
-class FinancialAssessment(FlaskForm):
-	total_income = IntegerField('Total Income')
+class FinancialAssessmentForm(FlaskForm):
+	total_income = IntegerField('Total Income', validators = [DataRequired()])
 	submit = SubmitField('Submit')

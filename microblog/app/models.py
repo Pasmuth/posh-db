@@ -48,7 +48,7 @@ class Client(db.Model):
 		return '<Client {}>'.format(self.name)
 
 
-class HUDAssessment(db.Model):
+class HousingAssessment(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	housing_status = db.Column(db.Integer)
 	created_date = db.Column(db.DateTime, index = True, default = datetime.utcnow)

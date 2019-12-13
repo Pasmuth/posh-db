@@ -5,34 +5,42 @@
 	<h1>Create Client</h1>
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
-		<p>
-			{{ form.name.label }} <br>
-			{{ form.name(size=32) }} <br>
-			{% for error in form.name.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.gender.label }}<br>
-			{{ form.gender(size=10) }}<br>
-			{% for error in form.gender.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.race.label }}<br>
-			{{ form.race(size=10) }}<br>
-			{% for error in form.race.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.military.label }}<br>
-			{{ form.military(size=10) }}<br>
-			{% for error in form.military.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
+		<table class="filter">
+			<tr>
+				<th>{{ form.name.label }}</th>
+				<th>{{ form.gender.label }}</th>
+				<th>{{ form.race.label }}</th>
+				<th>{{ form.military.label }}</th>
+			</tr>
+			<tr>
+				<td>{{ form.name(size=20) }}</td>
+				<td>{{ form.gender(size=6) }}</td>
+				<td>{{ form.race(size=6) }}</td>
+				<td>{{ form.military(size=6) }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% for error in form.name.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</td>
+				<td>
+					{% for error in form.gender.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</td>
+				<td>
+					{% for error in form.race.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</td>
+				<td>
+					{% for error in form.military.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</td>
+			</tr>
+		</table>		
 		<p> {{ form.submit() }} </p>
 	</form>
 

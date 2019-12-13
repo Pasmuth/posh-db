@@ -2,8 +2,11 @@ from flask import render_template, flash, redirect, url_for, request
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, CreatePost, CreateClient, FilterClients
-from app.models import User, Post, Client
+from app.forms import LoginForm, RegistrationForm, \
+					  CreatePost, CreateClient, \
+					  FilterClients, HousingAssessmentForm,\
+					  FinancialAssessmentForm
+from app.models import User, Post, Client, FinancialAssessment, HousingAssessment
 from app.lists import Lists
 
 @app.route('/')
@@ -100,3 +103,27 @@ def view_clients():
 		return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)
 	clients = Client.query.all()
 	return render_template('view_clients.html', title = 'Clients', clients = clients, lists = lists, form = form)
+
+
+@app.route('/client_<clientID>', methods = ['GET','POST'])
+@login_required
+def client_page(clientID):
+	lists = Lists()
+	finform = FinancialAssessmentForm()
+	houform = HousingAssessmentForm()
+	financialAssessments = FinancialAssessment.query.filter_by(clientID = clientID).all()
+	client = Client.query.filter_by(id = clientID).first()
+	if finform.validate_on_submit():
+		assess = FinancialAssessment(total_income = finform.total_income.data,
+									 created_by = current_user.id,
+									 clientID = clientID)
+		db.session.add(assess)
+		db.session.commit()
+		return redirect(url_for('client_page', clientID = clientID))
+	return render_template('client_page.html',
+						   title = 'Client {}'.format(clientID), 
+						   c = client, 
+						   lists = lists,
+						   finform = finform,
+						   houform = houform,
+						   finassess = financialAssessments)

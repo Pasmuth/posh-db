@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	
+	<table class="view">
+		<tr class="header">
+			<th>Client ID</th>
+			<th>Name</th>
+			<th>Gender</th>
+			<th>Race</th>
+			<th>Military Status</th>
+			<th>Created By</th>
+			<th>Created Date</th>
+		</tr>
+		<tr class="data">
+			<td><a href = "#">{{ c.id }}</a></td>
+			<td><a href = "#">{{ c.name }}</a></td>
+			<td><a href = "#">{{ lists.genders[c.gender] }}</a></td>
+			<td><a href = "#">{{ lists.race[c.race] }}</a></td>
+			<td><a href = "#">{{ lists.military[c.military] }}</a></td>
+			<td><a href = "#">{{ c.created_by }}</a></td>
+			<td><a href = "#">{{ c.created_date }}</a></td>
+		</tr>
+
+	<form action="" method="post">
+		{{ finform.hidden_tag() }}
+		<table class="edit">
+			<tr class="header">
+				<th>Total Income</th>
+			</tr>
+			<tr class="data">
+				<td>{{ finform.total_income }}</td>
+				<td>{{ finform.submit }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% for error in finform.total_income.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</td>
+			</tr>
+		</table>
+	</form>
+	{% if finassess %}
+	<table class="view">
+		<tr class="header">
+			<th>Assessment ID</th>
+			<th>Total Income</th>
+			<th>Assessment Date</th>
+			<th>Assessment Completed By</th>
+		</tr>
+		{% for a in finassess %}
+		<tr>
+			<td>{{ a.id }}</td>
+			<td>{{ a.total_income }}</td>
+			<td>{{ a.created_date }}</td>
+			<td>{{ a.created_by }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+
+{% endblock %}
