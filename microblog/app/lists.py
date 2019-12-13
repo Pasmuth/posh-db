@@ -20,3 +20,6 @@ class Lists(object):
 			6: 'Multi-Racial',
 			7: 'Unknown'}
 
+	housing_status = {1: 'Stably housed',
+	                  2: 'At risk of homelessness',
+	                  3: 'Homeless'}

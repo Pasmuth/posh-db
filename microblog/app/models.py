@@ -46,3 +46,25 @@ class Client(db.Model):
 
 	def __repr__(self):
 		return '<Client {}>'.format(self.name)
+
+
+class HUDAssessment(db.Model):
+	id = db.Column(db.Integer, primary_key = True)
+	housing_status = db.Column(db.Integer)
+	created_date = db.Column(db.DateTime, index = True, default = datetime.utcnow)
+	created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+	clientID = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+	def __repr__(self):
+		return '<HousingAssessment {}>'.format(self.name)
+
+
+class FinancialAssessment(db.Model):
+	id = db.Column(db.Integer, primary_key = True)
+	total_income = db.Column(db.Integer)
+	created_date = db.Column(db.DateTime, index = True, default = datetime.utcnow)
+	created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+	clientID = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+	def __repr__(self):
+		return '<FinancialAssessment {}>'.format(self.name)
